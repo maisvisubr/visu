@@ -16,7 +16,7 @@ def cadastroPage():
 
 @app.route("/pagina_principal")
 def paginaPrincipal():
-    return render_template("principalPage.html")
+    return render_template("index.html")
 
 
 @app.route("/verificar_cadastro", methods=["POST"])

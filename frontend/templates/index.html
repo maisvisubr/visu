@@ -38,9 +38,17 @@
         <span>
             <Button class="menu_btn">Próximo ></Button>
         </span>
+         <span>
+            <Button class="menu_btn" onclick="teste()">teste</Button>
+        </span>
     </div>
 </body>
 <script>
+    function teste(){
+        alert(
+            localStorage.getItem('id')
+            )
+    }
     var player
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('frame_box', {
