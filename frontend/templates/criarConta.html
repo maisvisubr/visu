@@ -22,7 +22,7 @@
               <label for="loginInput" class="form-label">Usuário</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bx bx-user"></i></span>
-                <input type="text" class="form-control" id="loginInput" placeholder="Digite seu login">
+                <input required type="text" class="form-control" id="loginInput" placeholder="Digite seu login">
               </div>
             </div>
 
@@ -30,30 +30,62 @@
                 <label for="passwordInput" class="form-label">Senha</label>
                 <div class="input-group">
                   <span class="input-group-text"><i class='bx bx-low-vision'></i></i></span>
-                  <input type="password" class="form-control" id="passwordInput" placeholder="Digite sua senha">
+                  <input required type="password" class="form-control" id="passwordInput" placeholder="Digite sua senha">
                 </div>
             </div>
             <div class="mb-3">
-                <label for="passwordInput" class="form-label">Confirmar Senha</label>
+                <label for="confirmaPass" class="form-label">Confirmar Senha</label>
                 <div class="input-group">
                   <span class="input-group-text"><i class='bx bx-low-vision'></i></i></span>
-                  <input type="password" class="form-control" id="confirmaPass" placeholder="Repita sua senha">
+                  <input required type="password" class="form-control" id="confirmaPass" placeholder="Repita sua senha">
                 </div>
             </div>
 
-          <button type="submit" class="btn btn-success" onclick="entrar()">Criar</button>
+          <button class="btn btn-success" onclick="verificarCadastro()">Criar</button>
         </form>
       </div>
     </div>
   </div>
-</body>
-<script>
-  function entrar(){
-    console.log("chamando");
-    console.log($('#passwordInput').val());
-    console.log($('#confirmaPass').val());
-    console.log($('#loginInput').val());
-  }
 
+
+<script>
+    function verificarCadastro() {
+        // Obter os valores dos campos do formulário
+        var login = document.getElementById("loginInput").value;
+        var senha = document.getElementById("passwordInput").value;
+        var confirmaSenha = document.getElementById("confirmaPass").value;
+
+        // Validar os campos (exemplo: verificar se as senhas coincidem)
+
+        // Criar um objeto com os dados para enviar
+        var dadosForm = {
+            "login": login,
+            "senha": senha
+        };
+
+        // Fazer uma solicitação POST para a rota de verificação
+        fetch("https://visu-zeta.vercel.app/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dadosForm)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data["msg"])
+                window.location.href = "/pagina_principal";
+            } else {
+                alert(data["msg"])
+            }
+        })
+        .catch(error => {
+            console.error("Erro na solicitação:", error);
+        });
+    }
 </script>
+
+</body>
+
 </html>
