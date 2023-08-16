@@ -19,10 +19,16 @@ def get_videos():
     return jsonify([v for v in col_videos.find()])
 
 
-@video_bp.route("/post_videos", methods=["POST"])
-def post_videos():
+@video_bp.route("/<usuario_id>/post_videos", methods=["POST"])
+def post_videos(usuario_id):
+    payload = request.json
+    payload.update(
+        {"usuario_id": usuario_id,
+         "_id": str(ObjectId())
+         }
+    )
     col_videos.insert_one(
-        request.json.update({"_id": str(ObjectId())})  # INSERE UM VIDEO NO BD
+        payload  # INSERE UM VIDEO NO BD
     )
     return jsonify({"msg": "video cadastrado com sucesso"})
 
