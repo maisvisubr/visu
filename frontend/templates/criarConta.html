@@ -65,7 +65,33 @@
                     if ( !result.success ){
                         alert(result.msg)
                     }else{
+                      logar(login, senha);                      
+                    }
+                    console.log("Resposta do servidor:", result);
+                })
+                .catch(error => {
+                    console.error("Erro:", error);
+                });
+            }
+            function logar(login, senha){
 
+                 const data = {
+                    login: login,
+                    senha: senha
+                };
+
+                 fetch("https://visu-zeta.vercel.app/logar", {  // Use a rota local relativa
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if ( !result.success ){
+                        alert(result.msg)
+                    }else{
                         window.location.href = "/pagina_principal";
                         localStorage.setItem('id', result.msg)
                     }

@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 
 usuario_bp = Blueprint("usuario_bp", __name__)
 client = MongoClient("mongodb+srv://maisvisubr:sHQu2YbLUGEvgruD@cluster0.um6smo3.mongodb.net/")
@@ -11,8 +10,10 @@ col_usuarios = db["usuarios"]
 @usuario_bp.route("/cadastrar", methods=["POST"])
 def cadastrar_usuario():
     if not col_usuarios.find_one({"login": request.json["login"]}):
+        payload = request.json
+        payload.update({"_id": request.json["login"]})
         col_usuarios.insert_one(
-            request.json # APENAS INSERE OS DADOS NO BD
+            payload  # APENAS INSERE OS DADOS NO BD
         )
         return jsonify(
             {
