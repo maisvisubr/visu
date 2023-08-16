@@ -17,7 +17,7 @@
             <button class="novo_video_btn">Novo Vídeo</button>
         </div>
         <div class="header_menu">
-            <span class="total_moedas">Moedas disponíveis: $ 100.00</span>
+            <span class="total_moedas">Moedas disponíveis: $<b id=my_coins>100.00</b></span>
             <button class="comprar_btn">Comprar moedas</button>
         </div>
     </header>
@@ -60,6 +60,7 @@
     function counter(val){
         if(val === 0){
             alert("Parabens, as moedas ja foram depositadas")
+            //ajax para ganhar moedas
             count.innerHTML = 0
         }else{
             count.innerHTML = val
@@ -80,6 +81,7 @@
         }, 1000)
 
     }
+    let my_coins = document.getElementById('my_coins')
 </script>
 
 </html>
