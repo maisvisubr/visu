@@ -11,7 +11,7 @@ col_videos = db["videos"]
 
 @video_bp.route("/")
 def show_version():
-    return jsonify({"version": 1.2})
+    return jsonify({"version": 1.3})
 
 
 @video_bp.route("/get_videos", methods=["POST"])
