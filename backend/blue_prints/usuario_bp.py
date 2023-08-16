@@ -12,7 +12,7 @@ col_usuarios = db["usuarios"]
 def cadastrar_usuario():
     if not col_usuarios.find_one({"login": request.json["login"]}):
         col_usuarios.insert_one(
-            request.json.update({"_id": str(ObjectId())})  # APENAS INSERE OS DADOS NO BD
+            request.json # APENAS INSERE OS DADOS NO BD
         )
         return jsonify(
             {
