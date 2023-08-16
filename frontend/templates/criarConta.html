@@ -49,7 +49,7 @@
 </body>
 <script>
   function entrar(){
-    if($('#passwordInput').text() === $('#confirmaPass').text() && $('#passwordInput').text() != '' && $('#confirmaPass').text() != ''){
+    if(($('#passwordInput').val() === $('#confirmaPass').val()) && ($('#passwordInput').val() != '') && ($('#confirmaPass').val() != '')){
         $.ajax({
           method:'POST',
           url:'/cadastrar',
