@@ -49,13 +49,18 @@
 </body>
 <script>
   function entrar(){
+
+    console.log($('#passwordInput').text());
+    console.log($('#confirmaPass').text());
+    console.log($('#loginInput').text());
+
     if($('#passwordInput').text() === $('#confirmaPass').text() && $('#passwordInput').text() != '' && $('#confirmaPass').text() != ''){
         $.ajax({
           method:'POST',
           url:'/cadastrar',
           data:{
-            login:$('#passwordInput').text(),
-            senha:$('#loginInput').text(),
+            login:$('#loginInput').text(),
+            senha:$('#passwordInput').text(),
             moedas:'0.00'
           },
           success:function(data){
