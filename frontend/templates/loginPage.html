@@ -22,7 +22,7 @@
               <label for="loginInput" class="form-label">Login</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bx bx-user"></i></span>
-                <input required type="text" class="form-control" id="loginInput" placeholder="Digite seu login">
+                <input type="text" class="form-control" id="loginInput" placeholder="Digite seu login">
               </div>
             </div>
 
@@ -30,13 +30,13 @@
                 <label for="passwordInput" class="form-label">Senha</label>
                 <div class="input-group">
                   <span class="input-group-text"><i class='bx bx-low-vision'></i></i></span>
-                  <input required type="password" class="form-control" id="passwordInput" placeholder="Digite sua senha">
+                  <input type="password" class="form-control" id="passwordInput" placeholder="Digite sua senha">
                 </div>
               </div>
 
+          <button type="submit" class="btn btn-success" onclick="entrar()">Entrar</button>
         </form>
-        <button  class="btn btn-success" onclick="logar()">Entrar</button>
-        
+
         <div class="mt-3">
           <a href="cadastro" type="button" class="btn btn-link">Criar uma conta</a>
         </div>
@@ -45,45 +45,21 @@
   </div>
 </body>
 <script>
-  window.onload = verificarLogin;
-
-  function verificarLogin(){
-    if (localStorage.getItem("id") != null ){
-      window.location.href = "/pagina_principal";
-    }
-  }
-
-  function logar(){
-
-    const login = document.getElementById("loginInput").value;
-    const senha = document.getElementById("passwordInput").value;
-
-    const data = {
-      login: login,
-      senha: senha
-    };
-
-    fetch("https://visu-zeta.vercel.app/logar", {  // Use a rota local relativa
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
+  function entrar(){
+    $.ajax({
+      method:'POST',
+      url:'/login',
+      data:{
+        login:$('#passwordInput').text(),
+        senha:$('#loginInput').text()
       },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(result => {
-      if ( !result.success ){
-          alert(result.msg)
-      }else{
-          window.location.href = "/pagina_principal";
-          localStorage.setItem('id', result.msg)
+      success:function(data){
+        let id = (JSON.parse(data)).id
+        localStorage.setItem('id', id)
+        alert(localStorage.getItem('id'))
       }
-      console.log("Resposta do servidor:", result);
     })
-    .catch(error => {
-      console.error("Erro:", error);
-    });
-    }
+  }
 
 </script>
 </html>

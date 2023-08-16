@@ -45,17 +45,15 @@
             function enviarCadastro() {
 
                 const login = document.getElementById("loginInput").value;
-                const senha = document.getElementById("passwordInput").value;
-                const confirmarSenah = document.getElementById("confirmaPass").value;
+                const senha = document.getElementById("confirmaPass").value;
 
                 const data = {
                     login: login,
                     senha: senha,
                     moedas: 0.0
                 };
-                
-                if (senha == confirmarSenah ){
-                  fetch("https://visu-zeta.vercel.app/cadastrar", {  // Use a rota local relativa
+
+                fetch("https://visu-zeta.vercel.app/cadastrar", {  // Use a rota local relativa
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -74,12 +72,7 @@
                 .catch(error => {
                     console.error("Erro:", error);
                 });
-
-                }else{
-                  alert("As senhas precisam ser iguais!")
-                }
             }
-
             function logar(login, senha){
 
                  const data = {
