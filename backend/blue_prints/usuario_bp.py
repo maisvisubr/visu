@@ -60,11 +60,9 @@ def logar_usuario():
     )  # RETORNO O ID QUE TEM QUE SER SALVO NO CACHE DO NAVEGADOR
 
 
-@usuario_bp.route(
-    "/atualizar_moedas/<usuario_id>/<qtd_moedas>")  # O _ID TEM QUE PEGAR DO CACHE E MANDAR NO PATH DA REQUISIÇÃO
-def atualizar_moeda(usuario_id, qtd_moedas):
-    col_usuarios.update_one(
-        {"_id": usuario_id},  # PEGA O ID DO USUARIO SALVO NO CACHE DO NAVEGADOR
-        {"$set": {"moedas": qtd_moedas}}  # ATUALIZA AS MOEDAS NO BD
-    )
-    return jsonify({"msg": "qtd_moedas atualizada do usuario"})
+@usuario_bp.route("/<_id>/moedas")  
+def atualizar_moeda(_id):
+
+    moedas = col_usuarios.find_one({"_id": _id}).get("moedas")
+
+    return jsonify({"msg": moedas})
