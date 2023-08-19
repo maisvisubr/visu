@@ -7,6 +7,8 @@ video_bp = Blueprint("video_bp", __name__)
 
 client = MongoClient("mongodb+srv://maisvisubr:sHQu2YbLUGEvgruD@cluster0.um6smo3.mongodb.net/")
 db = client["db"]
+
+col_usuarios = db["usuarios"]
 col_videos = db["videos"]
 
 
@@ -41,12 +43,26 @@ def post_videos():
             "_id": str(ObjectId())
         }
     )
+    usuario = col_usuarios.find_one({"_id": payload["usuario"]})
+
+    if int(payload["valor"]) > int(usuario["moedas"]):
+        return jsonify({
+            "success": False,
+            "msg": "Moedas insuficientes!"
+        })
 
     col_videos.insert_one(
         payload
     )
+    
+    col_usuarios.update_one(
+        {"_id": payload["usuario"]},
+        {"$set": {"moedas": int(usuario["moedas"]) - int(payload["valor"])}}
+    )
 
-    return jsonify({"msg": "video cadastrado com sucesso"})
+    return jsonify({
+        "success": True,
+        "msg": "video cadastrado com sucesso"})
 
 
 @video_bp.route("/update_status_video/<video_id>/<status>", methods=["POST"])
