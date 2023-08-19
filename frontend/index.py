@@ -21,7 +21,7 @@ def comprarMoedas():
 
 @app.route("/visualizar_video")
 def paginaPrincipal():
-    return render_template("index.html")
+    return render_template("visualizarVideoPage.html")
 
 
 @app.route("/lista_videos")
