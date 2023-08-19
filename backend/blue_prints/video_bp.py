@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from pegar_thumb import retorna_thumb
 
 video_bp = Blueprint("video_bp", __name__)
 
@@ -19,17 +20,21 @@ def get_videos():
     return jsonify([v for v in col_videos.find()])
 
 
-@video_bp.route("/<usuario_id>/post_videos", methods=["POST"])
-def post_videos(usuario_id):
+@video_bp.route("/post_videos", methods=["POST"])
+def post_videos():
     payload = request.json
+
     payload.update(
-        {"usuario_id": usuario_id,
-         "_id": str(ObjectId())
-         }
+        {
+            "thumb": retorna_thumb(payload["url"]),
+            "_id": str(ObjectId())
+        }
     )
+
     col_videos.insert_one(
-        payload  # INSERE UM VIDEO NO BD
+        payload
     )
+    
     return jsonify({"msg": "video cadastrado com sucesso"})
 
 

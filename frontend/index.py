@@ -11,12 +11,22 @@ def loginPage():
 
 @app.route("/cadastro")
 def cadastroPage():
-    return render_template("criarConta.html")
+    return render_template("criarContaPage.html")
 
 
-@app.route("/pagina_principal")
+@app.route("/visualizar_video")
 def paginaPrincipal():
     return render_template("index.html")
+
+
+@app.route("/lista_videos")
+def paginaVideos():
+    return render_template("listaVideosPage.html")
+
+
+@app.route("/meus_videos")
+def meusVideos():
+    return render_template("postarVideoPage.html")
 
 
 @app.route("/verificar_cadastro", methods=["POST"])

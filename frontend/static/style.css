@@ -47,6 +47,7 @@ header{
     font-weight: bold;
 }
 .novo_video_btn:hover{
+    cursor: pointer;
     background-color: black;
     color: white;
 }
@@ -105,4 +106,17 @@ header{
         width: 90%;
         height: 300px;
     }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh; /* Isso garante que o conteúdo seja centralizado verticalmente */
+}
+
+.gif {
+    margin-bottom: 10px; /* Espaçamento entre o GIF e o botão */
 }
