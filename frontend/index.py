@@ -14,6 +14,11 @@ def cadastroPage():
     return render_template("criarContaPage.html")
 
 
+@app.route("/comprar_moedas")
+def comprarMoedas():
+    return render_template("comprar.html")
+
+
 @app.route("/visualizar_video")
 def paginaPrincipal():
     return render_template("index.html")
