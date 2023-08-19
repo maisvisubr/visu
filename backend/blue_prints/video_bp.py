@@ -54,7 +54,7 @@ def post_videos():
     col_videos.insert_one(
         payload
     )
-    
+
     col_usuarios.update_one(
         {"_id": payload["usuario"]},
         {"$set": {"moedas": int(usuario["moedas"]) - int(payload["valor"])}}

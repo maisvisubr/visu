@@ -96,7 +96,7 @@
       gitLoading.hidden = false;
 
       if (
-        titulo != "" && url != "" && descricao != "" && valor != ""
+        titulo != "" && url != "" && descricao != "" && valor != "" && valor != "0"
       ){
 
         const data = {
@@ -116,15 +116,20 @@
     })
     .then(response => response.json())
     .then(result => {
-      
-      alert(result.msg)
-      gitLoading.hidden = true;
+      if (result.success){
+        alert(result.msg)
+        gitLoading.hidden = true;
 
-      console.log("Resposta do servidor:", result);
-      let video_box = document.getElementById('videos_box')
-      video_box.innerHTML = ""
-      carregaMeusVideos()
-      refreshCoins()
+        console.log("Resposta do servidor:", result);
+        let video_box = document.getElementById('videos_box')
+        video_box.innerHTML = ""
+        carregaMeusVideos()
+        refreshCoins()
+      }else{
+        alert(result.msg)
+        gitLoading.hidden = true;
+      }
+      
     })
     .catch(error => {
       console.error("Erro:", error);
@@ -176,7 +181,7 @@
         .then(function(res){
             let coin_area = document.getElementById('my_coins')
             coin_area.innerHTML = res.msg
-            alert(res.msg)
+            alert("Você tem " + res.msg + " moedas.")
         })
   }refreshCoins()
 
