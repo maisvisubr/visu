@@ -25,7 +25,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link">
-                <span class="total_moedas">Moedas disponíveis: $<b id=my_coins>100.00</b></span>
+                <span class="total_moedas">Moedas disponíveis: $<b id=my_coins></b></span>
               </a>
             </li>
             <li class="nav-item active">
@@ -124,6 +124,7 @@
       let video_box = document.getElementById('videos_box')
       video_box.innerHTML = ""
       carregaMeusVideos()
+      refreshCoins()
     })
     .catch(error => {
       console.error("Erro:", error);
@@ -164,6 +165,20 @@
     </div>
     `
   }
+
+  function refreshCoins(){
+    fetch(`https://visu-zeta.vercel.app/${localStorage.getItem('id')}/moedas`, {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json'
+        }
+      }).then(res => res.json())
+        .then(function(res){
+            let coin_area = document.getElementById('my_coins')
+            coin_area.innerHTML = res.msg
+            alert(res.msg)
+        })
+  }refreshCoins()
 
   function deleteVideo(tag){
     fetch(`https://visu-zeta.vercel.app/${tag.getAttribute('videoid')}/delete_video`, {
