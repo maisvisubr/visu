@@ -60,7 +60,7 @@ def logar_usuario():
     )  # RETORNO O ID QUE TEM QUE SER SALVO NO CACHE DO NAVEGADOR
 
 
-@usuario_bp.route("/<_id>/moedas")  
+@usuario_bp.route("/<_id>/moedas", methods=["POST"])
 def atualizar_moeda(_id):
 
     moedas = col_usuarios.find_one({"_id": _id}).get("moedas")
