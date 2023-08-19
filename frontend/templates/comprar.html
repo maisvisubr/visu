@@ -44,6 +44,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link">
+                  <span class="total_moedas">Moedas disponíveis: $<b id=my_coins></b></span>
+                </a>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/lista_videos">Início</a>
             </li>
@@ -70,7 +75,7 @@
                     <button type="submit" class="btn btn-primary btn-block">Comprar Moedas</button>
                 </form>
                 <div id="whatsappButton" class="mt-4 d-none">
-                    <a  id="bt_zap" class="btn btn-success btn-block">Fale Conosco no WhatsApp</a>
+                    <a  target="_blank" id="bt_zap" class="btn btn-success btn-block">Fale Conosco no WhatsApp</a>
                 </div>
                 <p class="mt-4 text-center">Aproveite nossos recursos premium e amplie sua diversão!</p>
             </div>
@@ -78,6 +83,19 @@
     </div>
 
     <script>
+        function refreshCoins(){
+            fetch(`https://visu-zeta.vercel.app/${localStorage.getItem('id')}/moedas`, {
+                method:'POST',
+                headers:{
+                'Content-type':'application/json'
+                }
+            }).then(res => res.json())
+                .then(function(res){
+                    let coin_area = document.getElementById('my_coins')
+                    coin_area.innerHTML = res.msg
+                })
+        }refreshCoins()
+
         document.getElementById('buyCoinsForm').addEventListener('submit', function(event) {
             event.preventDefault();
             calculateEquivalentValue();
