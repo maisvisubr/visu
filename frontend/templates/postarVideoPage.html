@@ -97,11 +97,39 @@
         titulo != "" && url != "" && descricao != "" && valor != ""
       ){
 
+        const data = {
+          titulo: titulo,
+          url: url,
+          descricao: descricao,
+          valor: valor,
+          usuario: localStorage.getItem("id")
+        };
+
+      fetch("https://visu-zeta.vercel.app/post_videos", {  
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      
+      alert(result.msg)
+      gitLoading.hidden = true;
+
+      console.log("Resposta do servidor:", result);
+    })
+    .catch(error => {
+      console.error("Erro:", error);
+      });
+
       }else{
         alert("Preencha todos os campos!")
         gitLoading.hidden = true;
       }
     }
+
 
       function prepare(titulo, descricao, valor, id){
     return `
