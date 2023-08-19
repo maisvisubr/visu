@@ -121,6 +121,9 @@
       gitLoading.hidden = true;
 
       console.log("Resposta do servidor:", result);
+      let video_box = document.getElementById('videos_box')
+      video_box.innerHTML = ""
+      carregaMeusVideos()
     })
     .catch(error => {
       console.error("Erro:", error);
@@ -146,11 +149,11 @@
         "valor": "13"
         
     */
-    function prepare(titulo, descricao, valor, id){
+    function prepare(titulo, descricao, valor, id, thumb){
     return `
     <div class="col-md-4 mb-4">
       <div class="card">
-        <img src="video3.jpg" class="card-img-top" alt="Vídeo 3">
+        <img src="${thumb}" class="card-img-top" alt="Vídeo 3">
         <div class="card-body">
           <h5 class="card-title">${titulo}</h5>
           <p class="card-text">${descricao}</p>
@@ -161,21 +164,31 @@
     </div>
     `
   }
-  let data = `[
-    {"titulo":"titulo1", "descricao":"descricao 1", "valor":"10", "id":"Fl8CpSj9bz0"},
-    {"titulo":"titulo2", "descricao":"descricao 2", "valor":"20", "id":"Ir-jneKU9dQ"},
-    {"titulo":"titulo3", "descricao":"descricao 3", "valor":"30", "id":"tOrhoj-2hYY"}
-  ]`
   function render(res){
-    let obj = JSON.parse(res)
+    let obj = res
     let video_box = document.getElementById('videos_box')
 
     obj.forEach(el => {
-      let component = prepare(el.titulo, el.descricao, el.valor, el.id)
+      let component = prepare(el.titulo, el.descricao, el.valor, el.id, el.thumb)
       video_box.innerHTML += component
     });
   }
-  render(data)
+  function carregaMeusVideos(){
+      fetch('https://visu-zeta.vercel.app/get_videos', {
+        method:'POST',
+        body:JSON.stringify({
+            user:localStorage.getItem('user')
+        }),
+        headers:{
+          'Content-type':'application/json'
+        }
+      }).then(res => res.json())
+        .then(function(res){
+            console.log(res)
+            render(res)
+        })
+  }
+  carregaMeusVideos()
   /*
   fetch('/getvideos', {
     method:'POST',
