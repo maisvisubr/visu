@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label for="valor">Valor</label>
-            <input type="number" class="form-control" id="valor" name="valor" step="1" required>
+            <input min="1" type="number" class="form-control" id="valor" name="valor" step="1" required>
         </div>
     </form>
 
@@ -225,31 +225,11 @@
         })
   }
   carregaMeusVideos()
-  /*
-  fetch('/getvideos', {
-    method:'POST',
-    headers:{
-      'Content-type':'application/json'
-    }
-  }).then(res => res.json())
-  .then(function(res){
-    let obj = JSON.parse(res)
-    obj.forEach(el => {
-      let video_box = document.getElementById('videos_box')
-      let component = prepare(el.titulo, el.descricao)
-      video_box.innerHTML += component
-    });
-  })*/
 
   function openVideo(tag){
     let vid = tag.getAttribute('videoid')
-
     window.location.href = `index.html?videoid=${vid}`
-    /*fetch('/abrirvideo', {
-      body:JSON.stringify({
-        videoid:vid
-      })
-    })*/
+    
   }
 </script>
 </script>
