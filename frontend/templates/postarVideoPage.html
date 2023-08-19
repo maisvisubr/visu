@@ -132,8 +132,21 @@
       }
     }
 
+    /*
+      rota é 'https://visu-zeta.vercel.app/' + localStorage.getItem("id") + '/get_videos'
 
-      function prepare(titulo, descricao, valor, id){
+      retorna uma lista desses valores
+
+        "_id": "64e0e3c56ba0e25064fd70ae",
+        "descricao": "faz o l",
+        "thumb": "https://i.ytimg.com/vi/fjdrbqN5e-0/hqdefault.jpg",
+        "titulo": "tesset",
+        "url": "https://youtu.be/fjdrbqN5e-0",
+        "usuario": "teste",
+        "valor": "13"
+        
+    */
+    function prepare(titulo, descricao, valor, id){
     return `
     <div class="col-md-4 mb-4">
       <div class="card">

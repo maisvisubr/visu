@@ -20,6 +20,11 @@ def get_videos():
     return jsonify([v for v in col_videos.find()])
 
 
+@video_bp.route("/<usuario>/get_videos", methods=["POST"])
+def get_videos_usuario(usuario):
+    return jsonify([v for v in col_videos.find({"usuario": usuario})])
+
+
 @video_bp.route("/post_videos", methods=["POST"])
 def post_videos():
     payload = request.json
