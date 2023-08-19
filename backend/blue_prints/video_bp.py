@@ -25,6 +25,12 @@ def get_videos_usuario(usuario):
     return jsonify([v for v in col_videos.find({"usuario": usuario})])
 
 
+@video_bp.route("/<_id>/delete_video", methods=["POST"])
+def delete_video(_id):
+    col_videos.delete_one({"_id": _id})
+    return jsonify({"msg": "video deletado com sucesso!"})
+
+
 @video_bp.route("/post_videos", methods=["POST"])
 def post_videos():
     payload = request.json
