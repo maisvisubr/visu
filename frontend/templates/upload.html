@@ -17,7 +17,7 @@
 </style>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Lista de vídeos</a>
+    <a class="navbar-brand" href="#">Meus vídeos</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -41,19 +41,44 @@
         </ul>
     </div>
 </nav>
+<div class="container mt-4">
+    <h2 style="text-align: center;">Formulário de Upload de Vídeo</h2>
+    <form enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="titulo">Título do Vídeo</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+            <label for="url">URL do Vídeo</label>
+            <input type="url" class="form-control" id="url" name="url" required>
+        </div>
+        <div class="form-group">
+            <label for="descricao">Descrição do Vídeo</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="valor">Valor</label>
+            <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary col-5">Enviar</button>
+        </div>
+    </form>
+</div>
+<h2 style="text-align: center;" class="mt-5">Meus Vídeos</h2>
 <!-- Área de Vídeos -->
 <div class="container mt-4">
   <div class="row" id="videos_box">
     
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 <script>
-  function prepare(titulo, descricao, valor, id){
+      function prepare(titulo, descricao, valor, id){
     return `
     <div class="col-md-4 mb-4">
       <div class="card">
@@ -62,7 +87,7 @@
           <h5 class="card-title">${titulo}</h5>
           <p class="card-text">${descricao}</p>
           <p>$ ${valor}</p>
-          <button class="btn btn-success" videoid="${id}" onclick="openVideo(this)">Play</button>
+          <button class="btn btn-danger" videoid="${id}" onclick="openVideo(this)">Delete</button>
         </div>
       </div>
     </div>
@@ -109,5 +134,6 @@
       })
     })*/
   }
+</script>
 </script>
 </html>
