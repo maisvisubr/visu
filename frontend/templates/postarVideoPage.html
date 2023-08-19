@@ -147,9 +147,8 @@
         "url": "https://youtu.be/fjdrbqN5e-0",
         "usuario": "teste",
         "valor": "13"
-
+        
     */
-
     function prepare(titulo, descricao, valor, id, thumb){
     return `
     <div class="col-md-4 mb-4">
@@ -159,18 +158,34 @@
           <h5 class="card-title">${titulo}</h5>
           <p class="card-text">${descricao}</p>
           <p>$ ${valor}</p>
-          <button class="btn btn-danger" videoid="${id}" onclick="openVideo(this)">Delete</button>
+          <button class="btn btn-danger" videoid="${id}" onclick="deleteVideo(this)">Delete</button>
         </div>
       </div>
     </div>
     `
   }
+
+  function deleteVideo(tag){
+    fetch(`https://visu-zeta.vercel.app/${tag.getAttribute('videoid')}/delete_video`, {
+        method:'POST',
+        headers:{
+          'Content-type':'application/json'
+        }
+      }).then(res => res.json())
+        .then(function(res){
+            alert(res.msg)
+            let video_box = document.getElementById('videos_box')
+            video_box.innerHTML = ""
+            carregaMeusVideos()
+        })
+  }
+
   function render(res){
     let obj = res
     let video_box = document.getElementById('videos_box')
 
     obj.forEach(el => {
-      let component = prepare(el.titulo, el.descricao, el.valor, el.id, el.thumb)
+      let component = prepare(el.titulo, el.descricao, el.valor, el._id, el.thumb)
       video_box.innerHTML += component
     });
   }
