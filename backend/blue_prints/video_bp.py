@@ -44,7 +44,7 @@ def post_videos():
     )
 
     payload.update(
-        retorna_thumb_e_id
+        retorna_thumb_e_id(payload["url"])
     )
     
     usuario = col_usuarios.find_one({"_id": payload["usuario"]})
