@@ -95,6 +95,20 @@ header{
     padding: 8px;
     cursor: pointer;
 }
+
+.menu_btn_automatico{
+    padding: 5px;
+    background-color: royalblue;
+    color: white;
+    font-size: larger;
+    border:none;
+    margin: 5px;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px gray;
+    border-radius: 20px;
+    padding: 8px;
+    cursor: pointer;
+}
 #play_btn{
     background-color: rgb(44, 212, 44);
 }
