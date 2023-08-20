@@ -39,10 +39,14 @@ def post_videos():
 
     payload.update(
         {
-            "thumb": retorna_thumb(payload["url"]),
             "_id": str(ObjectId())
         }
     )
+
+    payload.update(
+        retorna_thumb_e_id
+    )
+    
     usuario = col_usuarios.find_one({"_id": payload["usuario"]})
 
     if int(payload["valor"]) > int(usuario["moedas"]):
@@ -76,7 +80,7 @@ def update_video(video_id, status):
     return jsonify({"msg": "video atualizado com sucesso"})
 
 
-def retorna_thumb(video_url):
+def retorna_thumb_e_id(video_url):
     url = f"https://www.youtube.com/oembed?format=json&url={video_url}"
     headers = {
         "authority": "www.youtube.com",
@@ -95,5 +99,9 @@ def retorna_thumb(video_url):
         "sec-gpc": "1",
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
     }
+    thumb = requests.get(url, headers=headers).json()["thumbnail_url"]
 
-    return requests.get(url, headers=headers).json()["thumbnail_url"]
+    return {
+        "thumb": thumb,
+        "id_video": str(thumb).split("/")[4]
+    }
