@@ -23,7 +23,7 @@
     }
 </style>
 
-<body>
+<body onload="loadVideoWatch()">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Lista de vídeos</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -63,7 +63,7 @@
         </span>
         <span>
             <h3>
-                <h3 id="count">30</h3>
+                <h3 id="count">5</h3>
                 <span> segundos...</span>
             </h3>
         </span>
@@ -72,7 +72,7 @@
             <Button class="menu_btn" onclick="nextVideo()">Próximo ></Button>
         </span>
         <span>
-            <Button class="menu_btn_automatico" onclick="automatico(this)">Automático</Button>
+            <Button id="autoBtn" class="menu_btn_automatico" onclick="automatic(this)">Automático</Button>
         </span>
     </div>
 </body>
@@ -81,9 +81,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-
-    var AUTOMATICO = false
-
+    let AUTOMATICO
     function refreshCoins() {
         fetch(`https://visu-zeta.vercel.app/${localStorage.getItem('id')}/moedas`, {
             method: 'POST',
@@ -101,7 +99,11 @@
     var videoid = urlParams.get('videoid');
     var dataid = urlParams.get('dataid');
     var preco = urlParams.get('preco');
-    var automatico = urlParams.get('automatico');
+    var automatico = urlParams.get('auto');
+    if(automatico == 'true'){
+        AUTOMATICO = true
+        document.getElementById('autoBtn').style.backgroundColor = 'red'
+    }
 
     document.getElementById("video_valor").innerHTML  = preco;
 
@@ -113,11 +115,6 @@
                 autoplay: 0,
                 controls: 0,
                 rel: 0
-            },
-            events: {
-                onReady: function () {
-                    player.playVideo()
-                }
             }
         });
     }
@@ -128,7 +125,7 @@
             let obj = {
                 id_usuario: localStorage.getItem('id'),
                 moedasdrop: Number(document.getElementById('video_valor').innerHTML),
-                id_video: dataid
+                id_video: videoid
             }
 
             fetch('https://visu-zeta.vercel.app/droparmoedas', {
@@ -139,6 +136,10 @@
                 body: JSON.stringify(obj)
             }).then(res => {
                 alert("Parabens, as moedas ja foram depositadas")
+
+                if(AUTOMATICO){
+                    nextVideo()
+                }
                 refreshCoins()
             })
             count.innerHTML = 0
@@ -147,21 +148,19 @@
         }
     }
     function say() {
+        player.playVideo()
         let count = document.getElementById('count')
         let sec = Number(count.innerHTML)
-        
-        if ( sec === 30){
-            player.playVideo()
-            
-            let interval = setInterval(function () {
 
-                if (sec === -1) {
-                    clearInterval(interval)
-                } else {
-                    counter(sec--)
-                }
-            }, 1000)
-        }
+        let interval = setInterval(function () {
+
+            if (sec === -1) {
+                clearInterval(interval)
+            } else {
+                counter(sec--)
+            }
+        }, 1000)
+
     }
     let my_coins = document.getElementById('my_coins')
 
@@ -177,22 +176,16 @@
 
             dados = JSON.parse(result);
             
-            if ( dados.video){
-                window.location = 
-                "/visualizar_video?videoid=" + dados.video.id_video 
-                + "&preco=" + dados.video.valor 
-                + "&automatico=" + AUTOMATICO
-                + "&dataid=" + dados.video._id;
+            if ( dados.success ){
+                window.location = "/visualizar_video?videoid=" + dados.video.id_video + "&preco=" + dados.video.valor + "&auto=" + AUTOMATICO;
             }else{
-                alert("Sem videos novos.")
+                alert("Sem video")
             }
         } )
         .catch(error => console.log('error', error));
     }
 
-
-    
-    function automatico(tag){
+    function automatic(tag){
         if(!AUTOMATICO){
             tag.style.backgroundColor = 'red'
             AUTOMATICO = true
