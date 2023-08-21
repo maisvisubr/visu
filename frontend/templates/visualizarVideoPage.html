@@ -11,33 +11,37 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <style>
-    #nav{
+    #nav {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-    }nav{
+    }
+
+    nav {
         width: 100%;
     }
-  </style>
+</style>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Visualisar vídeo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#">Lista de vídeos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link">
-                    <span class="total_moedas">Moedas disponíveis: $<b id=my_coins></b></span>
-                  </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/lista_videos">Início</a>
+                    <a class="nav-link">
+                        <span class="total_moedas">Moedas disponíveis: $<b id=my_coins></b></span>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/comprar_moedas">Comprar Moedas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./meus_videos">Meus Vídeos</a>
                 </li>
             </ul>
         </div>
@@ -49,7 +53,7 @@
     </div>
     <div class="menu_video">
         <span>
-            <h3>Valor: <b class="video_valor" id="video_valor">$ 60</b></h3>
+            <h3>Valor: $<b class="video_valor" id="video_valor">60</b></h3>
         </span>
         <span>
             <Button id="play_btn" class="menu_btn" onclick="say()">Iniciar Vídeo</Button>
@@ -64,20 +68,40 @@
         <span>
             <Button class="menu_btn" onclick="nextVideo()">Próximo ></Button>
         </span>
-          <span>
-            <Button class="menu_btn_automatico" onclick="teste()">Automático</Button>
+        <span>
+            <Button class="menu_btn_automatico" onclick="automatico(this)">Automático</Button>
         </span>
-
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
+    var AUTOMATICO = false
+
+    function refreshCoins() {
+        fetch(`https://visu-zeta.vercel.app/${localStorage.getItem('id')}/moedas`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        }).then(res => res.json())
+            .then(function (res) {
+                let coin_area = document.getElementById('my_coins')
+                coin_area.innerHTML = res.msg
+                alert("Você tem " + res.msg + " moedas.")
+            })
+    } refreshCoins()
     var urlParams = new URLSearchParams(window.location.search);
     var videoid = urlParams.get('videoid');
+    var dataid = urlParams.get('dataid')
 
     var player
-    function onYouTubeIframeAPIReady() {
+    function onYouTubeIframeAPIReady(id = videoid) {
         player = new YT.Player('frame_box', {
-            videoId: videoid, 
+            videoId: id,
             playerVars: {
                 autoplay: 0,
                 controls: 0,
@@ -90,40 +114,69 @@
             }
         });
     }
-    function counter(val){
-        if(val <= 0){
-            /*
-            fetch('/addmoedas', {
-                method:'POST',
-                body:JSON.stringify({
-                    total:document.getElementById('video_valor').innerHTML
-                })
+    onYouTubeIframeAPIReady(videoid)
+    function counter(val) {
+        if (val <= 0) {
+            let obj = {
+                id_usuario: localStorage.getItem('id'),
+                moedasdrop: Number(document.getElementById('video_valor').innerHTML),
+                id_video: dataid
+            }
+
+            fetch('https://visu-zeta.vercel.app/droparmoedas', {
+                method: 'POST',
+                headers:{
+                    "Content-type":'application/json'
+                },
+                body: JSON.stringify(obj)
             }).then(res => {
-            })*/
-            alert("Parabens, as moedas ja foram depositadas")
+                alert(JSON.stringify(res))
+                alert("Parabens, as moedas ja foram depositadas")
+                refreshCoins()
+            })
             count.innerHTML = 0
-        }else{
+        } else {
             count.innerHTML = val
         }
     }
-    function say(){
+    function say() {
         player.playVideo()
         let count = document.getElementById('count')
         let sec = Number(count.innerHTML)
-        
-        let interval = setInterval(function(){
-            
-            if(sec === -1){
+
+        let interval = setInterval(function () {
+
+            if (sec === -1) {
                 clearInterval(interval)
-            }else{
+            } else {
                 counter(sec--)
             }
         }, 1000)
 
     }
     let my_coins = document.getElementById('my_coins')
-    function nextVideo(){
-        //chama proximo video
+
+    function nextVideo() {
+        fetch('https://visu-zeta.vercel.app/proximovideo', {
+            method: 'POST',
+        }).then(res => {
+            let obj = res.json()
+            alert(JSON.stringify(res))
+            if (obj.success == true) {
+                onYouTubeIframeAPIReady(obj.video)
+            } else {
+                alert("Sem vídeo")
+            }
+        })
+    }
+    function automatico(tag){
+        if(!AUTOMATICO){
+            tag.style.backgroundColor = 'red'
+            AUTOMATICO = true
+        }else{
+            tag.style.backgroundColor = 'royalblue'
+            AUTOMATICO = false
+        }
     }
 </script>
 
