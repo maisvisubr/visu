@@ -62,7 +62,7 @@
                 })
         }refreshCoins() 
 
-  function prepare(titulo, descricao, valor, id, thumb){
+  function prepare(titulo, descricao, valor, id, thumb, id_video){
     return `
     <div class="col-md-4 mb-4">
       <div class="card">
@@ -71,7 +71,7 @@
           <h5 class="card-title">${titulo}</h5>
           <p class="card-text">${descricao}</p>
           <p>$ ${valor}</p>
-          <button class="btn btn-success" videoid="${id}" onclick="openVideo(this)">Play</button>
+          <button class="btn btn-success" videoid="${id_video}" onclick="openVideo(this)">Play</button>
         </div>
       </div>
     </div>
@@ -83,7 +83,7 @@
     let video_box = document.getElementById('videos_box')
 
     obj.forEach(el => {
-      let component = prepare(el.titulo, el.descricao, el.valor, el._id, el.thumb)
+      let component = prepare(el.titulo, el.descricao, el.valor, el._id, el.thumb, el.id_video)
       video_box.innerHTML += component
     });
   }
@@ -103,7 +103,7 @@
   carregaMeusVideos()
 
   function openVideo(tag){
-    let vid = tag.getAttribute('videoid')
+    let vid = tag.getAttribute('id_video')
 
     window.location.href = `/visualizar_video?videoid=${vid}`
     /*fetch('/abrirvideo', {
