@@ -88,7 +88,7 @@ def dropar_moedas():
 
     col_usuarios.update_one(
         {"_id": payload["id_usuario"]},
-        {"$set": {"moedas": (qtd_moedas_usuario + payload["moedasdrop"])}}
+        {"$set": {"moedas": (int(qtd_moedas_usuario) + int(payload["moedasdrop"]))}}
     )
 
     col_videos.delete_one({"_id": payload["id_video"]})
