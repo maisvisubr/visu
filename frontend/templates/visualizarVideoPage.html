@@ -91,7 +91,6 @@
             .then(function (res) {
                 let coin_area = document.getElementById('my_coins')
                 coin_area.innerHTML = res.msg
-                alert("Você tem " + res.msg + " moedas.")
             })
     } refreshCoins()
     var urlParams = new URLSearchParams(window.location.search);
@@ -157,18 +156,28 @@
     let my_coins = document.getElementById('my_coins')
 
     function nextVideo() {
-        fetch('https://visu-zeta.vercel.app/proximovideo', {
-            method: 'POST',
-        }).then(res => {
-            let obj = res.json()
-            alert(JSON.stringify(res))
-            if (obj.success == true) {
-                onYouTubeIframeAPIReady(obj.video)
-            } else {
-                alert("Sem vídeo")
+        var requestOptions = {
+        method: 'POST',
+        redirect: 'follow'
+        };
+
+        fetch("https://visu-zeta.vercel.app/proximovideo", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+
+            dados = JSON.parse(result);
+            
+            if ( dados.success ){
+                window.location = "/visualizar_video?videoid=" + dados.video.id_video;
+            }else{
+                alert("Sem video")
             }
-        })
+        } )
+        .catch(error => console.log('error', error));
     }
+
+
+    
     function automatico(tag){
         if(!AUTOMATICO){
             tag.style.backgroundColor = 'red'
