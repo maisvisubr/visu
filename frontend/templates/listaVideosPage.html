@@ -103,7 +103,7 @@
   carregaMeusVideos()
 
   function openVideo(tag){
-    let vid = tag.getAttribute('id_video')
+    let vid = tag.getAttribute('videoid')
 
     window.location.href = `/visualizar_video?videoid=${vid}`
     /*fetch('/abrirvideo', {
