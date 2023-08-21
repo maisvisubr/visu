@@ -74,7 +74,7 @@
           <h5 class="card-title">${titulo}</h5>
           <p class="card-text">${descricao}</p>
           <p>$ ${valor}</p>
-          <button class="btn btn-success" valorvideo="${valor}" videoid="${id_video}" onclick="openVideo(this)">Play</button>
+          <button class="btn btn-success" dataid="${id}" valorvideo="${valor}" videoid="${id_video}" onclick="openVideo(this)">Play</button>
         </div>
       </div>
     </div>
@@ -108,8 +108,9 @@
   function openVideo(tag){
     let vid = tag.getAttribute('videoid');
     let preco = tag.getAttribute('valorvideo');
+    let dataid = tag.getAttribute('dataid');
 
-    window.location.href = `/visualizar_video?videoid=${vid}&preco=${preco}`
+    window.location.href = `/visualizar_video?videoid=${vid}&preco=${preco}&dataid=${dataid}`
     /*fetch('/abrirvideo', {
       body:JSON.stringify({
         videoid:vid

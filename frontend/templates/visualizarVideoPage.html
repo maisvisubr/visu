@@ -63,7 +63,7 @@
         </span>
         <span>
             <h3>
-                <h3 id="count">5</h3>
+                <h3 id="count">30</h3>
                 <span> segundos...</span>
             </h3>
         </span>
@@ -128,7 +128,7 @@
             let obj = {
                 id_usuario: localStorage.getItem('id'),
                 moedasdrop: Number(document.getElementById('video_valor').innerHTML),
-                id_video: videoid
+                id_video: dataid
             }
 
             fetch('https://visu-zeta.vercel.app/droparmoedas', {
@@ -138,7 +138,6 @@
                 },
                 body: JSON.stringify(obj)
             }).then(res => {
-                alert(JSON.stringify(res))
                 alert("Parabens, as moedas ja foram depositadas")
                 refreshCoins()
             })
@@ -148,19 +147,21 @@
         }
     }
     function say() {
-        player.playVideo()
         let count = document.getElementById('count')
         let sec = Number(count.innerHTML)
+        
+        if ( sec === 30){
+            player.playVideo()
+            
+            let interval = setInterval(function () {
 
-        let interval = setInterval(function () {
-
-            if (sec === -1) {
-                clearInterval(interval)
-            } else {
-                counter(sec--)
-            }
-        }, 1000)
-
+                if (sec === -1) {
+                    clearInterval(interval)
+                } else {
+                    counter(sec--)
+                }
+            }, 1000)
+        }
     }
     let my_coins = document.getElementById('my_coins')
 
@@ -176,10 +177,14 @@
 
             dados = JSON.parse(result);
             
-            if ( dados.success ){
-                window.location = "/visualizar_video?videoid=" + dados.video.id_video + "&preco=" + dados.video.valor;
+            if ( dados.video){
+                window.location = 
+                "/visualizar_video?videoid=" + dados.video.id_video 
+                + "&preco=" + dados.video.valor 
+                + "&automatico=" + AUTOMATICO
+                + "&dataid=" + dados.video._id;
             }else{
-                alert("Sem video")
+                alert("Sem videos novos.")
             }
         } )
         .catch(error => console.log('error', error));
