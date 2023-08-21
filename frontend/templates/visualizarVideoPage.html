@@ -38,6 +38,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/lista_videos">Início</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/comprar_moedas">Comprar Moedas</a>
                 </li>
                 <li class="nav-item">
@@ -53,7 +56,7 @@
     </div>
     <div class="menu_video">
         <span>
-            <h3>Valor: $<b class="video_valor" id="video_valor">60</b></h3>
+            <h3>Valor: $<b class="video_valor" id="video_valor"></b></h3>
         </span>
         <span>
             <Button id="play_btn" class="menu_btn" onclick="say()">Iniciar Vídeo</Button>
@@ -94,8 +97,13 @@
             })
     } refreshCoins()
     var urlParams = new URLSearchParams(window.location.search);
+
     var videoid = urlParams.get('videoid');
-    var dataid = urlParams.get('dataid')
+    var dataid = urlParams.get('dataid');
+    var preco = urlParams.get('preco');
+    var automatico = urlParams.get('automatico');
+
+    document.getElementById("video_valor").innerHTML  = preco;
 
     var player
     function onYouTubeIframeAPIReady(id = videoid) {
@@ -114,12 +122,13 @@
         });
     }
     onYouTubeIframeAPIReady(videoid)
+
     function counter(val) {
         if (val <= 0) {
             let obj = {
                 id_usuario: localStorage.getItem('id'),
                 moedasdrop: Number(document.getElementById('video_valor').innerHTML),
-                id_video: dataid
+                id_video: videoid
             }
 
             fetch('https://visu-zeta.vercel.app/droparmoedas', {
@@ -168,7 +177,7 @@
             dados = JSON.parse(result);
             
             if ( dados.success ){
-                window.location = "/visualizar_video?videoid=" + dados.video.id_video;
+                window.location = "/visualizar_video?videoid=" + dados.video.id_video + "&preco=" + dados.video.valor;
             }else{
                 alert("Sem video")
             }
