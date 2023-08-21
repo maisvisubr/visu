@@ -96,6 +96,23 @@ def dropar_moedas():
     return jsonify({"msg": "ok"})
 
 
+@video_bp.route("/proximovideo", methods=["POST"])
+def proximo_video():
+
+    video = col_videos.find_one()
+
+    if video:
+        return jsonify({
+            "success": True,
+            "video": video
+        })
+    else:
+        return jsonify({
+            "success": True,
+            "video": None
+        })
+
+
 def retorna_thumb_e_id(video_url):
     url = f"https://www.youtube.com/oembed?format=json&url={video_url}"
     headers = {
