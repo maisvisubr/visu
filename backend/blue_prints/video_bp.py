@@ -46,7 +46,7 @@ def post_videos():
     payload.update(
         retorna_thumb_e_id(payload["url"])
     )
-    
+
     usuario = col_usuarios.find_one({"_id": payload["usuario"]})
 
     if int(payload["valor"]) > int(usuario["moedas"]):
@@ -78,6 +78,22 @@ def update_video(video_id, status):
 
     )
     return jsonify({"msg": "video atualizado com sucesso"})
+
+
+@video_bp.route("/droparmoedas", methods=["POST"])
+def dropar_moedas():
+    payload = request.json
+
+    qtd_moedas_usuario = col_usuarios.find_one({"_id": payload["id_usuario"]})["moedas"]
+
+    col_usuarios.update_one(
+        {"_id": payload["id_usuario"]},
+        {"$set": {"moedas": (qtd_moedas_usuario + payload["moedasdrop"])}}
+    )
+
+    col_videos.delete_one({"_id": payload["id_video"]})
+
+    return jsonify({"msg": "ok"})
 
 
 def retorna_thumb_e_id(video_url):
