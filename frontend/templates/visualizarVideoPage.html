@@ -53,7 +53,10 @@
             <Button id="play_btn" class="menu_btn" onclick="say()">Iniciar Vídeo</Button>
         </span>
         <span>
-            <h3 id="count">5 <span>segundos...</span></h3>
+            <h3>
+                <h3 id="count">5</h3>
+                <span> segundos...</span>
+            </h3>
         </span>
 
         <span>
@@ -69,21 +72,6 @@
     var urlParams = new URLSearchParams(window.location.search);
     var videoid = urlParams.get('videoid');
 
-    //obter informação do video
-    /*
-    fetch('/getvideo', {
-        method:'POST',
-        body:JSON.stringify({
-            videoid:videoid
-        })
-    }).then(res => res.json())
-    .then(function(res){
-        let obj = JSON.parse(res)
-        let title = document.getElementById('titulo_video').innerHTML = res.title
-        let valor = document.getElementById('video_valor').innerHTML = res.valor
-        let segundos = document.getElementById('count').innerHTML = res.segundos
-    })
-    */
     var player
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('frame_box', {
@@ -101,15 +89,16 @@
         });
     }
     function counter(val){
-        if(val === 0){
+        if(val <= 0){
+            /*
             fetch('/addmoedas', {
                 method:'POST',
                 body:JSON.stringify({
                     total:document.getElementById('video_valor').innerHTML
                 })
             }).then(res => {
-                alert("Parabens, as moedas ja foram depositadas")
-            })
+            })*/
+            alert("Parabens, as moedas ja foram depositadas")
             count.innerHTML = 0
         }else{
             count.innerHTML = val
