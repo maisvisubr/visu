@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from random import randint
 import requests
 
 video_bp = Blueprint("video_bp", __name__)
@@ -91,20 +92,30 @@ def dropar_moedas():
         {"$set": {"moedas": (int(qtd_moedas_usuario) + int(payload["moedasdrop"]))}}
     )
 
-    col_videos.delete_one({"_id": payload["id_video"]})
+    video = col_videos.find_one({"_id": payload["id_video"]})
+
+    col_videos.update_one(
+        {"_id": payload["id_video"]},
+        {"$set": {"valor": (int(video["valor"]) - 1)}}
+    )
+
+    if int(video["valor"]) <= 0:
+        col_videos.delete_one({"_id": payload["id_video"]})
 
     return jsonify({"msg": "ok"})
 
 
 @video_bp.route("/proximovideo", methods=["POST"])
 def proximo_video():
+    videos = [v for v in col_videos.find()]
 
-    video = col_videos.find_one()
-
-    if video:
+    if len(videos) > 0:
+        tamanho_alcansavel = len(videos) - 1
+        video_aleatorio = videos[randint(0, tamanho_alcansavel)]
+        
         return jsonify({
             "success": True,
-            "video": video
+            "video": video_aleatorio
         })
     else:
         return jsonify({

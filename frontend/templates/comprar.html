@@ -104,7 +104,7 @@
 
         function calculateEquivalentValue() {
             const quantity = parseInt(document.getElementById('quantity').value);
-            const equivalentValue = quantity * 3;
+            const equivalentValue = quantity * .25;
             const equivalentValueElement = document.getElementById('equivalentValue');
             equivalentValueElement.innerHTML = `<h4 style="color:green;">Valor equivalente em R$: <b id="valor_eq">${equivalentValue.toFixed(2)}<\/b><\/h4>`;
         }
