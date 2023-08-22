@@ -99,7 +99,7 @@ def dropar_moedas():
         {"$set": {"valor": (int(video["valor"]) - 1)}}
     )
 
-    if int(video["valor"]) <= 0:
+    if int(video["valor"]) <= 1:
         col_videos.delete_one({"_id": payload["id_video"]})
 
     return jsonify({"msg": "ok"})
@@ -112,7 +112,7 @@ def proximo_video():
     if len(videos) > 0:
         tamanho_alcansavel = len(videos) - 1
         video_aleatorio = videos[randint(0, tamanho_alcansavel)]
-        
+
         return jsonify({
             "success": True,
             "video": video_aleatorio
