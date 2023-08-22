@@ -51,9 +51,9 @@
   window.onload = verificarLogin;
 
   function verificarLogin(){
-    if (localStorage.getItem("id") != null ){
-      window.location.href = "/pagina_principal";
-    }
+    if ( localStorage.getItem("id") != null){
+      window.location.href = "/lista_videos";
+    } 
   }
 
   function logar(){
