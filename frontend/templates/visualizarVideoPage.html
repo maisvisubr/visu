@@ -24,7 +24,7 @@
 </style>
 
 <body >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
         <a class="navbar-brand" href="#">Lista de vídeos</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,30 +50,31 @@
         </div>
     </nav>
 
-    <h1 class="titulo_video" id="titulo_video">Título Video</h1>
-    <div id="frame_box">
+    <div class="col-md-4 mb-4" style="width: 100%;">
+        <div id="frame_box">
 
-    </div>
-    <div class="menu_video">
-        <span>
-            <h3>Valor: $<b class="video_valor" id="video_valor"></b></h3>
-        </span>
-        <span>
-            <Button id="play_btn" class="menu_btn" onclick="say()">Iniciar Vídeo</Button>
-        </span>
-        <span>
-            <h3>
-                <h3 id="count">45</h3>
-                <span> segundos...</span>
-            </h3>
-        </span>
-
-        <span>
-            <Button class="menu_btn" onclick="nextVideo()">Próximo ></Button>
-        </span>
-        <span>
-            <Button id="autoBtn" class="menu_btn_automatico" onclick="automatic(this)">Automático: OFF</Button>
-        </span>
+        </div>
+        <div class="menu_video">
+            <span>
+                <h3>Valor: $<b class="video_valor" id="video_valor"></b></h3>
+            </span>
+            <span>
+                <Button id="play_btn" class="menu_btn" onclick="say()">Iniciar Vídeo</Button>
+            </span>
+            <span>
+                <h3>
+                    <h3 id="count">45</h3>
+                    <span> segundos...</span>
+                </h3>
+            </span>
+    
+            <span>
+                <Button class="menu_btn" onclick="nextVideo()">Próximo ></Button>
+            </span>
+            <span>
+                <Button id="autoBtn" class="menu_btn_automatico" onclick="automatic(this)">Automático: OFF</Button>
+            </span>
+        </div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -68,15 +68,16 @@ header{
 .titulo_video{
     margin: 20px;
 }
-.menu_video{
+.menu_video {
     display: flex;
     flex-direction: row;
     margin: 20px;
 }
-.menu_video > *{
+
+.menu_video > * {
     margin: 10px;
     display: flex;
-    flex-direction: row;
+    flex: 1; /* Adicionado para definir flex-grow, flex-shrink e flex-basis */
     align-items: center;
 }
 .video_valor{
