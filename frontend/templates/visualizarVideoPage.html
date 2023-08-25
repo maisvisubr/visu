@@ -21,6 +21,25 @@
     nav {
         width: 100%;
     }
+
+    .component {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 767px) {
+      .component h1 {
+        font-size: 1.5rem;
+      }
+      .component button {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+      }
+    }
 </style>
 
 <body >
@@ -50,31 +69,31 @@
         </div>
     </nav>
 
-    <div class="col-md-4 mb-4" style="width: 100%;">
-        <div id="frame_box">
-
-        </div>
-        <div class="menu_video">
-            <span>
-                <h3>Valor: $<b class="video_valor" id="video_valor"></b></h3>
-            </span>
-            <span>
-                <Button id="play_btn" class="menu_btn" onclick="say()">Iniciar Vídeo</Button>
-            </span>
-            <span>
-                <h3>
-                    <h3 id="count">45</h3>
-                    <span> segundos...</span>
-                </h3>
-            </span>
     
-            <span>
-                <Button class="menu_btn" onclick="nextVideo()">Próximo ></Button>
-            </span>
-            <span>
-                <Button id="autoBtn" class="menu_btn_automatico" onclick="automatic(this)">Automático: OFF</Button>
-            </span>
+        
+        
+    <div class="row">
+        <div class="col-md-4 col-sm-12 component">
+            <div  id="frame_box">
+            </div>
         </div>
+        
+        <div class="col-md-4 col-sm-12 component">
+            <h1 >Oferece $<b id="video_valor"></b></h1>
+        </div>
+        <div class="col-md-4 col-sm-12 component">
+        <button class="btn btn-success" onclick="say()">Iniciar vídeo</button>
+        </div>
+        <div class="col-md-4 col-sm-12 component">
+        <h1><span id="count">45</span> segundos</h1>
+        </div>
+        <div class="col-md-4 col-sm-12 component">
+        <button onclick="nextVideo()" class="btn btn-primary">Próximo vídeo</button>
+        </div>
+        <div class="col-md-4 col-sm-12 component">
+        <button id="autoBtn" onclick="automatic(this)" class="btn btn-info">Automático OFF</button>
+        </div>
+    </div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
