@@ -69,15 +69,15 @@
         </div>
     </nav>
 
-    
-        
-        
+
+
+
     <div class="row">
         <div class="col-md-4 col-sm-12 component">
             <div  id="frame_box">
             </div>
         </div>
-        
+
         <div class="col-md-4 col-sm-12 component">
             <h1 >Oferece $<b id="video_valor"></b></h1>
         </div>
@@ -183,7 +183,7 @@
     function say() {
         let count = document.getElementById('count')
         let sec = Number(count.innerHTML)
-        
+
         if (sec == 45){
             player.playVideo()
 
@@ -196,13 +196,13 @@
                 }
             }, 1000)
         }
-       
+
     }
 
     function sayautomatico() {
     let count = document.getElementById('count');
     let sec = 45;
-    
+
     let interval = setInterval(function () {
         if (sec === -1) {
             clearInterval(interval);
@@ -210,7 +210,7 @@
             counter(sec--);
         }
     }, 1000);
-   
+
 }
 
 
@@ -227,10 +227,10 @@
         .then(result => {
 
             dados = JSON.parse(result);
-            
+
             if ( dados.video ){
-                window.location = "/visualizar_video?videoid=" + dados.video.id_video 
-                + "&preco=" + dados.video.valor 
+                window.location = "/visualizar_video?videoid=" + dados.video.id_video
+                + "&preco=" + dados.video.valor
                 + "&auto=" + automatico
                 + "&dataid=" + dados.video._id;
             }else{
@@ -241,15 +241,17 @@
     }
 
     function automatic(tag){
-        if (tag.style.backgroundColor = 'royalblue' ){
-            tag.style.backgroundColor = 'red'
-            tag.innerHTML = "AUTOMÁTICO: ON"
+        console.log(tag.style.backgroundColor);
+        if (tag.style.backgroundColor == 'royalblue' ){
+            tag.style.backgroundColor = 'red';
+            tag.innerHTML = "AUTOMÁTICO: ON";
             automatico = 'true';
         }else{
-            automatiico = 'false';
-            tag.style.backgroundColor = 'royalblue'
-            tag.innerHTML = "AUTOMÁTICO: OFF"
+            automatico = 'false';
+            tag.style.backgroundColor = 'royalblue';
+            tag.innerHTML = "AUTOMÁTICO: OFF";
         }
+        
     }
 </script>
 
