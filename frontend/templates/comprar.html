@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4169413141237911"
-     crossorigin="anonymous"></script>
-     
+    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprar Moedas</title>
@@ -41,6 +39,29 @@
     </style>
 </head>
 <body>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4169413141237911"
+        crossorigin="anonymous"></script>
+        <!-- Popup Ver Mais -->
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-4169413141237911"
+            data-ad-slot="8996119891"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+
+    <amp-ad width="100vw" height="320"
+        type="adsense"
+        data-ad-client="ca-pub-4169413141237911"
+        data-ad-slot="8996119891"
+        data-auto-format="rspv"
+        data-full-width="">
+        <div overflow=""></div>
+    </amp-ad>
+
  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Comprar Moedas</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,6 +99,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Calcular preço</button>
                 </form>
+                <button  class="btn btn-success mt-2 btn-block" onclick="verAnuncio()">Assistir anúncio</button>
                 <div id="whatsappButton" class="mt-4 d-none">
                     <a  target="_blank" id="bt_zap" class="btn btn-success btn-block">Fale Conosco no WhatsApp</a>
                 </div>
@@ -85,8 +107,14 @@
             </div>
         </div>
     </div>
-
+    
     <script>
+
+        function verAnuncio(){
+         
+        }
+        
+
         function refreshCoins(){
             fetch(`https://visu-zeta.vercel.app/${localStorage.getItem('id')}/moedas`, {
                 method:'POST',
@@ -122,5 +150,6 @@
         }
         
     </script>
+  
 </body>
 </html>
