@@ -6,6 +6,17 @@
     <title>Comprar Moedas</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
         body {
             background-color: #f0f0f0;
         }
@@ -38,7 +49,8 @@
     <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
 </head>
 <body>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4169413141237911"
+    <div id="popup">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4169413141237911"
      crossorigin="anonymous"></script>
 <!-- Popup Ver Mais -->
 <ins class="adsbygoogle"
@@ -59,6 +71,8 @@
      data-full-width="">
   <div overflow=""></div>
 </amp-ad>
+    </div>
+    
  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Comprar Moedas</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,12 +119,18 @@
     </div>
     
     <script>
-
-        function verAnuncio(){
-         
-        }
         
+        // Função para mostrar o pop-up
+        function verAnuncio() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "block";
+        }
 
+        function fecharAnuncio() {
+        var popup = document.getElementById("popup");
+        popup.style.display = "none";
+        alert("Parbéns você ganhou uma moeda!")
+    }
         function refreshCoins(){
             fetch(`https://visu-zeta.vercel.app/${localStorage.getItem('id')}/moedas`, {
                 method:'POST',
